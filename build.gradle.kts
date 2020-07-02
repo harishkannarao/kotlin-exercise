@@ -10,6 +10,9 @@ plugins {
 val javaVersion: String by project
 val kotlinVersion: String by project
 val coroutinesVersion: String by project
+val junitVersion: String by project
+val hamcrestVersion: String by project
+val mockitoVersion: String by project
 
 group = "com.harishkannarao.kotlin.exercise"
 version = ""
@@ -28,6 +31,10 @@ allprojects {
 		implementation("org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion")
 		implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion")
 		implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutinesVersion}")
+
+		testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
+		testImplementation("org.hamcrest:hamcrest:$hamcrestVersion")
+		testImplementation("org.mockito:mockito-core:$mockitoVersion")
 	}
 
 	tasks.withType<Test> {
