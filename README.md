@@ -7,10 +7,16 @@
 
 ## Commands
 
-### Build
+### Build (test and assemble)
 
     ./gradlew clean build
     
 ### Execute the application
+
+#### Gradle
+
+    ./gradlew clean run
+    
+#### Java
 
     java -jar application/build/libs/application-exec.jar
