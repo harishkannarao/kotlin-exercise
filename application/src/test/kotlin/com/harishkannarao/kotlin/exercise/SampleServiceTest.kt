@@ -1,6 +1,6 @@
 package com.harishkannarao.kotlin.exercise
 
-import com.harishkannarao.kotlin.exercise.helper.captureNonNullable
+import com.harishkannarao.kotlin.exercise.helper.MockitoHelper
 import com.harishkannarao.kotlin.exercise.sample.SampleDao
 import com.harishkannarao.kotlin.exercise.sample.SampleDto
 import com.harishkannarao.kotlin.exercise.sample.SampleService
@@ -44,7 +44,7 @@ class SampleServiceTest {
         )
 
         val uuidCaptor: ArgumentCaptor<SampleDto> = ArgumentCaptor.forClass(SampleDto::class.java)
-        doNothing().`when`(mockSampleDao).save(uuidCaptor.captureNonNullable())
+        doNothing().`when`(mockSampleDao).save(MockitoHelper.capture(uuidCaptor))
 
         underTest.create(inputDto)
 
@@ -58,12 +58,10 @@ class SampleServiceTest {
                 ""
         )
 
-        val uuidCaptor: ArgumentCaptor<SampleDto> = ArgumentCaptor.forClass(SampleDto::class.java)
-        doNothing().`when`(mockSampleDao).save(uuidCaptor.captureNonNullable())
-
         val result = assertThrows(IllegalArgumentException::class.java) { underTest.create(inputWithEmptyName) }
 
         assertThat(result.message, equalTo("'name' is empty"))
-        assertThat(uuidCaptor.allValues, empty())
+
+        verify(mockSampleDao, times(0)).save(MockitoHelper.anyObject())
     }
 }
