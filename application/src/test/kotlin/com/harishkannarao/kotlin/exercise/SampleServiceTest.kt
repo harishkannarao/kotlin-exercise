@@ -15,11 +15,11 @@ import org.mockito.Mockito.*
 class SampleServiceTest {
 
     private lateinit var underTest: SampleService
-    private lateinit var mockSampleDao: SampleDao
+    private lateinit var mockSampleDao: SampleDao<Boolean>
 
     @BeforeEach
     internal fun setUp() {
-        mockSampleDao = mock(SampleDao::class.java)
+        mockSampleDao = MockitoHelper.mockGenericClass()
         underTest = SampleService(mockSampleDao)
     }
 
@@ -44,7 +44,7 @@ class SampleServiceTest {
         )
 
         val uuidCaptor: ArgumentCaptor<SampleDto> = ArgumentCaptor.forClass(SampleDto::class.java)
-        doNothing().`when`(mockSampleDao).save(MockitoHelper.capture(uuidCaptor))
+        doNothing().`when`(mockSampleDao).save(MockitoHelper.capture(uuidCaptor), MockitoHelper.anyObject())
 
         underTest.create(inputDto)
 
@@ -62,6 +62,6 @@ class SampleServiceTest {
 
         assertThat(result.message, equalTo("'name' is empty"))
 
-        verify(mockSampleDao, times(0)).save(MockitoHelper.anyObject())
+        verify(mockSampleDao, times(0)).save(MockitoHelper.anyObject(), MockitoHelper.anyObject())
     }
 }

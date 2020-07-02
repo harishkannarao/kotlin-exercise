@@ -1,6 +1,6 @@
 package com.harishkannarao.kotlin.exercise.sample
 
-class SampleDao {
+class SampleDao<T> {
     fun get(id: String): SampleDto {
         return SampleDto(
                 id = id,
@@ -9,7 +9,7 @@ class SampleDao {
     }
 
     @Suppress("UNUSED_PARAMETER")
-    fun save(dto: SampleDto) {
-
+    fun save(dto: SampleDto, ret: T): T {
+        return ret
     }
 }

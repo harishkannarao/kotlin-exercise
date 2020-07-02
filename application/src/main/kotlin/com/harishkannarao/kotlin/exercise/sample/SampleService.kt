@@ -4,7 +4,7 @@ import java.lang.IllegalArgumentException
 import java.lang.IllegalStateException
 
 class SampleService(
-        private val sampleDao: SampleDao
+        private val sampleDao: SampleDao<Boolean>
 ) {
     fun get(id: String): SampleDto {
         return sampleDao.get(id)
@@ -14,6 +14,6 @@ class SampleService(
         if (dto.name.isEmpty()) {
             throw IllegalArgumentException("'name' is empty")
         }
-        sampleDao.save(dto)
+        sampleDao.save(dto, true)
     }
 }
