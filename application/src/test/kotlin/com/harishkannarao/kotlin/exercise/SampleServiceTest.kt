@@ -3,6 +3,7 @@ package com.harishkannarao.kotlin.exercise
 import com.harishkannarao.kotlin.exercise.helper.MockitoHelper
 import com.harishkannarao.kotlin.exercise.sample.SampleDao
 import com.harishkannarao.kotlin.exercise.sample.SampleDto
+import com.harishkannarao.kotlin.exercise.sample.SampleHttpClient
 import com.harishkannarao.kotlin.exercise.sample.SampleService
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
@@ -16,11 +17,13 @@ class SampleServiceTest {
 
     private lateinit var underTest: SampleService
     private lateinit var mockSampleDao: SampleDao<Boolean>
+    private lateinit var mockSampleHttpClient: SampleHttpClient
 
     @BeforeEach
     internal fun setUp() {
         mockSampleDao = MockitoHelper.mockGenericClass()
-        underTest = SampleService(mockSampleDao)
+        mockSampleHttpClient = mock(SampleHttpClient::class.java)
+        underTest = SampleService(mockSampleDao, mockSampleHttpClient)
     }
 
     @Test
@@ -43,12 +46,15 @@ class SampleServiceTest {
                 "name-test"
         )
 
-        val uuidCaptor: ArgumentCaptor<SampleDto> = ArgumentCaptor.forClass(SampleDto::class.java)
-        doNothing().`when`(mockSampleDao).save(MockitoHelper.capture(uuidCaptor), MockitoHelper.anyObject())
+        `when`(mockSampleDao.save(MockitoHelper.anyObject(), MockitoHelper.anyObject())).thenReturn(true)
 
         underTest.create(inputDto)
+        val uuidCaptor: ArgumentCaptor<SampleDto> = ArgumentCaptor.forClass(SampleDto::class.java)
+        val booleanCaptor: ArgumentCaptor<Boolean> = ArgumentCaptor.forClass(Boolean::class.java)
 
+        verify(mockSampleDao).save(MockitoHelper.capture(uuidCaptor), MockitoHelper.capture(booleanCaptor))
         assertThat(uuidCaptor.allValues, contains(inputDto))
+        assertThat(booleanCaptor.allValues, contains(true))
     }
 
     @Test
