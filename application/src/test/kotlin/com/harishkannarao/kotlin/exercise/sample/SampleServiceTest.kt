@@ -1,9 +1,5 @@
-package com.harishkannarao.kotlin.exercise
+package com.harishkannarao.kotlin.exercise.sample
 
-import com.harishkannarao.kotlin.exercise.sample.SampleDao
-import com.harishkannarao.kotlin.exercise.sample.SampleDto
-import com.harishkannarao.kotlin.exercise.sample.SampleHttpClient
-import com.harishkannarao.kotlin.exercise.sample.SampleService
 import com.nhaarman.mockitokotlin2.*
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*

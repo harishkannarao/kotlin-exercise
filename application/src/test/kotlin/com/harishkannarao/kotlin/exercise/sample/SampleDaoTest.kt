@@ -1,4 +1,4 @@
-package com.harishkannarao.kotlin.exercise
+package com.harishkannarao.kotlin.exercise.sample
 
 import com.harishkannarao.kotlin.exercise.sample.SampleDao
 import com.harishkannarao.kotlin.exercise.sample.SampleDto

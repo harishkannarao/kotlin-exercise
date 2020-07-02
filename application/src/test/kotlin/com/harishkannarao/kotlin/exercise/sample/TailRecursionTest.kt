@@ -1,4 +1,4 @@
-package com.harishkannarao.kotlin.exercise
+package com.harishkannarao.kotlin.exercise.sample
 
 import com.harishkannarao.kotlin.exercise.sample.TailRecursion
 import org.hamcrest.MatcherAssert.assertThat
