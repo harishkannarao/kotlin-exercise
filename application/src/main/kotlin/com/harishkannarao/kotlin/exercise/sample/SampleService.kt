@@ -15,7 +15,9 @@ class SampleService(
         sampleDao.save(dto, true)
     }
 
-    fun createMany(inputs: List<SampleDto>) {
-        TODO("Not yet implemented")
+    fun createMany(dtoList: List<SampleDto>) {
+        if (dtoList.isNotEmpty()) {
+            sampleHttpClient.saveAll(dtoList)
+        }
     }
 }

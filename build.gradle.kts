@@ -12,7 +12,7 @@ val kotlinVersion: String by project
 val coroutinesVersion: String by project
 val junitVersion: String by project
 val hamcrestVersion: String by project
-val mockitoVersion: String by project
+val kotlinMockitoVersion: String by project
 
 group = "com.harishkannarao.kotlin.exercise"
 version = ""
@@ -34,7 +34,7 @@ allprojects {
 
 		testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
 		testImplementation("org.hamcrest:hamcrest:$hamcrestVersion")
-		testImplementation("org.mockito:mockito-core:$mockitoVersion")
+		testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:$kotlinMockitoVersion")
 	}
 
 	tasks.withType<Test> {
