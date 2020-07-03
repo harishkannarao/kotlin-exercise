@@ -32,4 +32,11 @@ class CharacterCalculator {
             }
         }
     }
+
+    fun calculateTotalOccurrence(input: String): Map<Char, Int> {
+        return input.toList()
+                .groupBy { it }
+                .filter { entry -> entry.key != ' ' }
+                .mapValues { entry -> entry.value.size }
+    }
 }

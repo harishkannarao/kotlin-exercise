@@ -1,6 +1,7 @@
 package com.harishkannarao.kotlin.exercise.sample
 
 import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.anEmptyMap
 import org.hamcrest.Matchers.equalTo
 import org.junit.jupiter.api.Test
 
@@ -32,5 +33,35 @@ class CharacterCalculatorTest {
         assertThat(result['a'], equalTo(2))
         assertThat(result['b'], equalTo(1))
         assertThat(result['c'], equalTo(2))
+    }
+
+    @Test
+    internal fun `calculatorTotalOccurrence returns total occurrence of every character`() {
+        val input = "aabbcdabce"
+
+        val result: Map<Char, Int> = underTest.calculateTotalOccurrence(input)
+
+        assertThat(result['a'], equalTo(3))
+        assertThat(result['b'], equalTo(3))
+        assertThat(result['c'], equalTo(2))
+        assertThat(result['d'], equalTo(1))
+        assertThat(result['e'], equalTo(1))
+    }
+
+    @Test
+    internal fun `calculateTotalOccurrence returns empty map for blank string`() {
+        assertThat(underTest.calculateTotalOccurrence("  "), anEmptyMap())
+    }
+
+    @Test
+    internal fun `calculateTotalOccurrence ignores whitespace character`() {
+        val input = "aab bc"
+
+        val result: Map<Char, Int> = underTest.calculateTotalOccurrence(input)
+
+        assertThat(result.containsKey(' '), equalTo(false))
+        assertThat(result['a'], equalTo(2))
+        assertThat(result['b'], equalTo(2))
+        assertThat(result['c'], equalTo(1))
     }
 }
