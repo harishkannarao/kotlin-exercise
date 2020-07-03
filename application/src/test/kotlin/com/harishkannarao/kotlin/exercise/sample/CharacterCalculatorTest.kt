@@ -4,13 +4,13 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.jupiter.api.Test
 
-class MaxLetterSequenceTest {
-    val underTest = MaxLetterSequence()
+class CharacterCalculatorTest {
+    private val underTest = CharacterCalculator()
 
     @Test
-    internal fun `calculate returns max sequence of every character in the string`() {
+    internal fun `calculateMaxOccurrence returns max sequence of every character in the string`() {
         val input = "aabbbaccccd"
-        val result = underTest.calculate(input)
+        val result = underTest.calculateMaxOccurrence(input)
 
         assertThat(result['a'], equalTo(2))
         assertThat(result['b'], equalTo(3))
@@ -19,14 +19,14 @@ class MaxLetterSequenceTest {
     }
 
     @Test
-    internal fun `calculate returns empty map for blank string`() {
-        assertThat(underTest.calculate("  ").isEmpty(), equalTo(true))
+    internal fun `calculateMaxOccurrence returns empty map for blank string`() {
+        assertThat(underTest.calculateMaxOccurrence("  ").isEmpty(), equalTo(true))
     }
 
     @Test
-    internal fun `calculate ignores white spaces in the string`() {
+    internal fun `calculateMaxOccurrence ignores white spaces in the string`() {
         val input = "aa  ba cc"
-        val result = underTest.calculate(input)
+        val result = underTest.calculateMaxOccurrence(input)
 
         assertThat(result.containsKey(' '), equalTo(false))
         assertThat(result['a'], equalTo(2))
