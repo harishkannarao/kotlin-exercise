@@ -10,14 +10,14 @@ class TailRecursionTest {
 
     @Test
     fun `calculate returns sum of list items`() {
-        val result = underTest.calculateSum(listOf(2, 4, 5))
+        val result = underTest.calculateSum(sequenceOf(2, 4, 5))
 
         assertThat(result, equalTo(11))
     }
 
     @Test
     fun `calculate returns 0 for empty list`() {
-        val result = underTest.calculateSum(emptyList())
+        val result = underTest.calculateSum(emptySequence())
 
         assertThat(result, equalTo(0))
     }
