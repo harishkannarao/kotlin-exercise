@@ -2,16 +2,16 @@ package com.harishkannarao.kotlin.exercise.sample
 
 class CharacterCalculator {
     fun calculateMaxOccurrence(input: String): Map<Char, Int> {
-        return calculateMaxOccurrenceInternal(input.toList(), emptyList(), emptyMap())
+        return calculateMaxOccurrenceInternal(input.asSequence(), emptySequence(), emptyMap())
     }
 
-    private tailrec fun calculateMaxOccurrenceInternal(chars: List<Char>, occurrenceContext: List<Pair<Char, Int>>, acc: Map<Char, Int>): Map<Char, Int> {
-        if (chars.isEmpty()) {
+    private tailrec fun calculateMaxOccurrenceInternal(chars: Sequence<Char>, occurrenceContext: Sequence<Pair<Char, Int>>, acc: Map<Char, Int>): Map<Char, Int> {
+        if (chars.none()) {
             return acc
         }
         val char = chars.first()
         val previousCount = occurrenceContext.lastOrNull() ?: Pair(char, 0)
-        val remainder = chars.takeLast(chars.size - 1)
+        val remainder = chars.drop(1)
         return when (char) {
             ' ' -> {
                 calculateMaxOccurrenceInternal(remainder, occurrenceContext, acc)

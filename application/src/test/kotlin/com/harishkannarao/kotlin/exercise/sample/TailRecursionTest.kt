@@ -1,6 +1,5 @@
 package com.harishkannarao.kotlin.exercise.sample
 
-import com.harishkannarao.kotlin.exercise.sample.TailRecursion
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.jupiter.api.Test
