@@ -2,33 +2,31 @@ package com.harishkannarao.kotlin.exercise.sample
 
 class CharacterCalculator {
     fun calculateMaxOccurrence(input: String): Map<Char, Int> {
-        return calculateMaxOccurrenceInternal(input.asSequence(), emptySequence(), emptyMap())
+        val chars = input.asSequence()
+        return calculateMaxOccurrenceInternal(chars, chars.first(), 0, emptyMap())
     }
 
-    private tailrec fun calculateMaxOccurrenceInternal(chars: Sequence<Char>, occurrenceContext: Sequence<Pair<Char, Int>>, acc: Map<Char, Int>): Map<Char, Int> {
+    private tailrec fun calculateMaxOccurrenceInternal(chars: Sequence<Char>, previousChar: Char, previousCharCount: Int, acc: Map<Char, Int>): Map<Char, Int> {
         if (chars.none()) {
             return acc
         }
         val char = chars.first()
-        val previousCount = occurrenceContext.lastOrNull() ?: Pair(char, 0)
         val remainder = chars.drop(1)
         return when (char) {
             ' ' -> {
-                calculateMaxOccurrenceInternal(remainder, occurrenceContext, acc)
+                calculateMaxOccurrenceInternal(remainder, char, 0, acc)
             }
-            previousCount.first -> {
-                val currentOccurrence = Pair(char, previousCount.second + 1)
-                val updatedContext = occurrenceContext.plus(currentOccurrence)
+            previousChar -> {
+                val currentOccurrence = Pair(char, previousCharCount + 1)
                 val currentCount = acc[char] ?: 0
                 val updatedAcc = if (currentOccurrence.second > currentCount) acc.plus(currentOccurrence) else acc
-                calculateMaxOccurrenceInternal(remainder, updatedContext, updatedAcc)
+                calculateMaxOccurrenceInternal(remainder, char, previousCharCount + 1, updatedAcc)
             }
             else -> {
                 val currentOccurrence = Pair(char, 1)
-                val updatedContext = occurrenceContext.plus(currentOccurrence)
                 val currentCount = acc[char] ?: 0
                 val updatedAcc = if (currentOccurrence.second > currentCount) acc.plus(currentOccurrence) else acc
-                calculateMaxOccurrenceInternal(remainder, updatedContext, updatedAcc)
+                calculateMaxOccurrenceInternal(remainder, char, 1, updatedAcc)
             }
         }
     }

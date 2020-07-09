@@ -9,7 +9,7 @@ class CharacterCalculatorTest {
     private val underTest = CharacterCalculator()
 
     @Test
-    internal fun `calculateMaxOccurrence returns max sequence of every character in the string`() {
+    fun `calculateMaxOccurrence returns max sequence of every character in the string`() {
         val input = "aabbbaccccd"
         val result = underTest.calculateMaxOccurrence(input)
 
@@ -20,12 +20,12 @@ class CharacterCalculatorTest {
     }
 
     @Test
-    internal fun `calculateMaxOccurrence returns empty map for blank string`() {
+    fun `calculateMaxOccurrence returns empty map for blank string`() {
         assertThat(underTest.calculateMaxOccurrence("  ").isEmpty(), equalTo(true))
     }
 
     @Test
-    internal fun `calculateMaxOccurrence ignores white spaces in the string`() {
+    fun `calculateMaxOccurrence ignores white spaces in the string`() {
         val input = "aa  ba cc"
         val result = underTest.calculateMaxOccurrence(input)
 
@@ -36,7 +36,7 @@ class CharacterCalculatorTest {
     }
 
     @Test
-    internal fun `calculatorTotalOccurrence returns total occurrence of every character`() {
+    fun `calculatorTotalOccurrence returns total occurrence of every character`() {
         val input = "aabbcdabce"
 
         val result: Map<Char, Int> = underTest.calculateTotalOccurrence(input)
@@ -49,12 +49,12 @@ class CharacterCalculatorTest {
     }
 
     @Test
-    internal fun `calculateTotalOccurrence returns empty map for blank string`() {
+    fun `calculateTotalOccurrence returns empty map for blank string`() {
         assertThat(underTest.calculateTotalOccurrence("  "), anEmptyMap())
     }
 
     @Test
-    internal fun `calculateTotalOccurrence ignores whitespace character`() {
+    fun `calculateTotalOccurrence ignores whitespace character`() {
         val input = "aab bc"
 
         val result: Map<Char, Int> = underTest.calculateTotalOccurrence(input)
