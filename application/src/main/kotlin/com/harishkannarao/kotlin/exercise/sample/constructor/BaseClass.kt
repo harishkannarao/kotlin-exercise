@@ -1,6 +1,6 @@
 package com.harishkannarao.kotlin.exercise.sample.constructor
 
-data class ClassWithConstructorAnnotation
+open class BaseClass
 @SuppressWarnings("test annotation on constructor")
 constructor(val field1: String, val field2: String) {
     val field3: String = field1 + field2
