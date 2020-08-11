@@ -36,4 +36,4 @@ jobs:
       if: ${{ always() }}
       with:
         name: unit-test-results
-        path: application/build/reports/testsci-build.sh
+        path: application/build/reports/tests
