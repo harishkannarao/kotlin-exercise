@@ -3,7 +3,7 @@ package com.harishkannarao.kotlin.exercise.sample.extension
 import com.harishkannarao.kotlin.exercise.sample.extension.ListExtensions.dropFirst
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
-import org.junit.jupiter.api.Test
+import org.testng.annotations.Test
 
 class ListExtensionsTest {
     @Test

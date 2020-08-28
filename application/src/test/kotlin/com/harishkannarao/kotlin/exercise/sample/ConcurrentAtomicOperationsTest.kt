@@ -2,12 +2,11 @@ package com.harishkannarao.kotlin.exercise.sample
 
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.containsInAnyOrder
 import org.hamcrest.Matchers.equalTo
-import org.junit.jupiter.api.Test
+import org.testng.annotations.Test
 import java.math.BigDecimal
 
 class ConcurrentAtomicOperationsTest {

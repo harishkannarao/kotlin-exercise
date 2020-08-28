@@ -2,7 +2,7 @@ package com.harishkannarao.kotlin.exercise.sample
 
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
-import org.junit.jupiter.api.Test
+import org.testng.annotations.Test
 
 class FibonacciSeriesGeneratorTest {
 

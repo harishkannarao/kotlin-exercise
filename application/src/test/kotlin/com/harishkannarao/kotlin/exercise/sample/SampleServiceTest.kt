@@ -2,10 +2,11 @@ package com.harishkannarao.kotlin.exercise.sample
 
 import com.nhaarman.mockitokotlin2.*
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.*
-import org.junit.jupiter.api.Assertions.assertThrows
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
+import org.hamcrest.Matchers.contains
+import org.hamcrest.Matchers.equalTo
+import org.testng.Assert.fail
+import org.testng.annotations.BeforeMethod
+import org.testng.annotations.Test
 
 class SampleServiceTest {
 
@@ -13,7 +14,7 @@ class SampleServiceTest {
     private lateinit var mockSampleDao: SampleDao<Boolean>
     private lateinit var mockSampleHttpClient: SampleHttpClient
 
-    @BeforeEach
+    @BeforeMethod(alwaysRun = true)
     internal fun setUp() {
         mockSampleDao = mock()
         mockSampleHttpClient = mock()
@@ -51,11 +52,12 @@ class SampleServiceTest {
     @Test
     fun `create throws error for empty name and doesn't save in data store`() {
         val inputWithEmptyName = SampleDto("test-id", "")
-
-        val result = assertThrows(IllegalArgumentException::class.java) { underTest.create(inputWithEmptyName) }
-
-        assertThat(result.message, equalTo("'name' is empty"))
-
+        try {
+            underTest.create(inputWithEmptyName)
+            fail("should throw exception")
+        } catch (result: IllegalArgumentException) {
+            assertThat(result.message, equalTo("'name' is empty"))
+        }
         verify(mockSampleDao, times(0)).save(any(), any())
     }
 

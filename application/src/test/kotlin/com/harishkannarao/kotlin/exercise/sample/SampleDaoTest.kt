@@ -1,10 +1,8 @@
 package com.harishkannarao.kotlin.exercise.sample
 
-import com.harishkannarao.kotlin.exercise.sample.SampleDao
-import com.harishkannarao.kotlin.exercise.sample.SampleDto
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
-import org.junit.jupiter.api.Test
+import org.testng.annotations.Test
 
 class SampleDaoTest {
 

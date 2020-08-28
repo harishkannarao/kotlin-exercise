@@ -3,7 +3,7 @@ package com.harishkannarao.kotlin.exercise.sample
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.anEmptyMap
 import org.hamcrest.Matchers.equalTo
-import org.junit.jupiter.api.Test
+import org.testng.annotations.Test
 
 class CharacterCalculatorTest {
     private val underTest = CharacterCalculator()

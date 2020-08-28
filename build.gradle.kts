@@ -10,7 +10,7 @@ plugins {
 val javaVersion: String by project
 val kotlinVersion: String by project
 val coroutinesVersion: String by project
-val junitVersion: String by project
+val testNgVersion: String by project
 val hamcrestVersion: String by project
 val kotlinMockitoVersion: String by project
 
@@ -32,13 +32,13 @@ allprojects {
 		implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion")
 		implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutinesVersion}")
 
-		testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
+		testImplementation("org.testng:testng:$testNgVersion")
 		testImplementation("org.hamcrest:hamcrest:$hamcrestVersion")
 		testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:$kotlinMockitoVersion")
 	}
 
 	tasks.withType<Test> {
-		useJUnitPlatform()
+		useTestNG {}
 		val properties = System.getProperties().entries.map { it.key.toString() to it.value }.toMap()
 		systemProperties(properties)
 	}
