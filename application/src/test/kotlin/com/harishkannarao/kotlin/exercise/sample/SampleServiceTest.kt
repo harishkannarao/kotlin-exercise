@@ -15,7 +15,7 @@ class SampleServiceTest {
     private lateinit var mockSampleHttpClient: SampleHttpClient
 
     @BeforeMethod(alwaysRun = true)
-    internal fun setUp() {
+    fun setUp() {
         mockSampleDao = mock()
         mockSampleHttpClient = mock()
         underTest = SampleService(mockSampleDao, mockSampleHttpClient)
