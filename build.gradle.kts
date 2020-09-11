@@ -12,6 +12,7 @@ val kotlinVersion: String by project
 val coroutinesVersion: String by project
 val testNgVersion: String by project
 val hamcrestVersion: String by project
+val assertkVersion: String by project
 val kotlinMockitoVersion: String by project
 
 group = "com.harishkannarao.kotlin.exercise"
@@ -34,6 +35,7 @@ allprojects {
 
 		testImplementation("org.testng:testng:$testNgVersion")
 		testImplementation("org.hamcrest:hamcrest:$hamcrestVersion")
+		testImplementation("com.willowtreeapps.assertk:assertk-jvm:$assertkVersion")
 		testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:$kotlinMockitoVersion")
 	}
 

@@ -1,10 +1,8 @@
 package com.harishkannarao.kotlin.exercise.sample
 
+import assertk.assertThat
+import assertk.assertions.*
 import com.nhaarman.mockitokotlin2.*
-import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.contains
-import org.hamcrest.Matchers.equalTo
-import org.testng.Assert.fail
 import org.testng.annotations.BeforeMethod
 import org.testng.annotations.Test
 
@@ -30,7 +28,7 @@ class SampleServiceTest {
 
         val result: SampleDto = underTest.get(id)
 
-        assertThat(result, equalTo(expectedDto))
+        assertThat(result).isEqualTo(expectedDto)
     }
 
     @Test
@@ -45,19 +43,19 @@ class SampleServiceTest {
         val booleanCaptor = argumentCaptor<Boolean>()
         verify(mockSampleDao).save(dtoCaptor.capture(), booleanCaptor.capture())
 
-        assertThat(dtoCaptor.allValues, contains(inputDto))
-        assertThat(booleanCaptor.allValues, contains(true))
+        assertThat(dtoCaptor.allValues).containsExactly(inputDto)
+        assertThat(booleanCaptor.allValues).containsExactly(true)
     }
 
     @Test
     fun `create throws error for empty name and doesn't save in data store`() {
         val inputWithEmptyName = SampleDto("test-id", "")
-        try {
+        assertThat {
             underTest.create(inputWithEmptyName)
-            fail("should throw exception")
-        } catch (result: IllegalArgumentException) {
-            assertThat(result.message, equalTo("'name' is empty"))
+        }.isFailure().given {
+            assertThat(it.message).isEqualTo("'name' is empty")
         }
+
         verify(mockSampleDao, times(0)).save(any(), any())
     }
 
@@ -71,8 +69,9 @@ class SampleServiceTest {
 
         val listCaptor = argumentCaptor<List<SampleDto>>()
         verify(mockSampleHttpClient).saveAll(listCaptor.capture())
-        assertThat(listCaptor.allValues.size, equalTo(1))
-        assertThat(listCaptor.allValues.first(), contains(*input.toTypedArray()))
+
+        assertThat(listCaptor.allValues.size).isEqualTo(1)
+        assertThat(listCaptor.allValues.first()).containsExactly(*input.toTypedArray())
     }
 
     @Test
