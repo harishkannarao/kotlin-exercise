@@ -1,11 +1,11 @@
 package com.harishkannarao.kotlin.exercise.sample
 
+import assertk.assertThat
+import assertk.assertions.containsExactlyInAnyOrder
+import assertk.assertions.isEqualTo
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
-import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.containsInAnyOrder
-import org.hamcrest.Matchers.equalTo
 import org.testng.annotations.Test
 import java.math.BigDecimal
 
@@ -23,7 +23,7 @@ class ConcurrentAtomicOperationsTest {
         }
         runBlocking {
             val result = listOf(result1.await(), result2.await())
-            assertThat(result, containsInAnyOrder<Long>(1, 2))
+            assertThat(result).containsExactlyInAnyOrder(1L, 2L)
         }
     }
 
@@ -37,7 +37,7 @@ class ConcurrentAtomicOperationsTest {
         }
         runBlocking {
             val result = listOf(result1.await(), result2.await())
-            assertThat(result, containsInAnyOrder<BigDecimal>(BigDecimal.valueOf(2.00), BigDecimal.valueOf(4.00)))
+            assertThat(result).containsExactlyInAnyOrder(BigDecimal.valueOf(2.00), BigDecimal.valueOf(4.00))
         }
     }
 
@@ -50,9 +50,9 @@ class ConcurrentAtomicOperationsTest {
             underTest.addString("value2")
         }
         runBlocking {
-            assertThat(result1.await(), equalTo(true))
-            assertThat(result2.await(), equalTo(true))
-            assertThat(underTest.getAllString(), containsInAnyOrder<String>("value1", "value2"))
+            assertThat(result1.await()).isEqualTo(true)
+            assertThat(result2.await()).isEqualTo(true)
+            assertThat(underTest.getAllString()).containsExactlyInAnyOrder("value1", "value2")
         }
     }
 }

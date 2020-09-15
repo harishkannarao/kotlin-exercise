@@ -1,8 +1,8 @@
 package com.harishkannarao.kotlin.exercise.sample
 
-import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.anEmptyMap
-import org.hamcrest.Matchers.equalTo
+import assertk.assertThat
+import assertk.assertions.isEmpty
+import assertk.assertions.isEqualTo
 import org.testng.annotations.Test
 
 class CharacterCalculatorTest {
@@ -13,15 +13,15 @@ class CharacterCalculatorTest {
         val input = "aabbbaccccd"
         val result = underTest.calculateMaxOccurrence(input)
 
-        assertThat(result['a'], equalTo(2))
-        assertThat(result['b'], equalTo(3))
-        assertThat(result['c'], equalTo(4))
-        assertThat(result['d'], equalTo(1))
+        assertThat(result['a']).isEqualTo(2)
+        assertThat(result['b']).isEqualTo(3)
+        assertThat(result['c']).isEqualTo(4)
+        assertThat(result['d']).isEqualTo(1)
     }
 
     @Test
     fun `calculateMaxOccurrence returns empty map for blank string`() {
-        assertThat(underTest.calculateMaxOccurrence("  ").isEmpty(), equalTo(true))
+        assertThat(underTest.calculateMaxOccurrence("  ")).isEmpty()
     }
 
     @Test
@@ -29,10 +29,10 @@ class CharacterCalculatorTest {
         val input = "aa  ba cc"
         val result = underTest.calculateMaxOccurrence(input)
 
-        assertThat(result.containsKey(' '), equalTo(false))
-        assertThat(result['a'], equalTo(2))
-        assertThat(result['b'], equalTo(1))
-        assertThat(result['c'], equalTo(2))
+        assertThat(result.containsKey(' ')).isEqualTo(false)
+        assertThat(result['a']).isEqualTo(2)
+        assertThat(result['b']).isEqualTo(1)
+        assertThat(result['c']).isEqualTo(2)
     }
 
     @Test
@@ -41,16 +41,16 @@ class CharacterCalculatorTest {
 
         val result: Map<Char, Int> = underTest.calculateTotalOccurrence(input)
 
-        assertThat(result['a'], equalTo(3))
-        assertThat(result['b'], equalTo(3))
-        assertThat(result['c'], equalTo(2))
-        assertThat(result['d'], equalTo(1))
-        assertThat(result['e'], equalTo(1))
+        assertThat(result['a']).isEqualTo(3)
+        assertThat(result['b']).isEqualTo(3)
+        assertThat(result['c']).isEqualTo(2)
+        assertThat(result['d']).isEqualTo(1)
+        assertThat(result['e']).isEqualTo(1)
     }
 
     @Test
     fun `calculateTotalOccurrence returns empty map for blank string`() {
-        assertThat(underTest.calculateTotalOccurrence("  "), anEmptyMap())
+        assertThat(underTest.calculateTotalOccurrence("  ")).isEmpty()
     }
 
     @Test
@@ -59,9 +59,9 @@ class CharacterCalculatorTest {
 
         val result: Map<Char, Int> = underTest.calculateTotalOccurrence(input)
 
-        assertThat(result.containsKey(' '), equalTo(false))
-        assertThat(result['a'], equalTo(2))
-        assertThat(result['b'], equalTo(2))
-        assertThat(result['c'], equalTo(1))
+        assertThat(result.containsKey(' ')).isEqualTo(false)
+        assertThat(result['a']).isEqualTo(2)
+        assertThat(result['b']).isEqualTo(2)
+        assertThat(result['c']).isEqualTo(1)
     }
 }
