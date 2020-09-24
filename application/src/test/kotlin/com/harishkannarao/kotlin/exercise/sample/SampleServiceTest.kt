@@ -71,7 +71,7 @@ class SampleServiceTest {
         verify(mockSampleHttpClient).saveAll(listCaptor.capture())
 
         assertThat(listCaptor.allValues).hasSize(1)
-        assertThat(listCaptor.allValues.first()).containsExactly(*input.toTypedArray())
+        assertThat(listCaptor.allValues.first().toList()).containsExactly(*input.toTypedArray())
     }
 
     @Test
