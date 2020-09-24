@@ -70,7 +70,7 @@ class SampleServiceTest {
         val listCaptor = argumentCaptor<List<SampleDto>>()
         verify(mockSampleHttpClient).saveAll(listCaptor.capture())
 
-        assertThat(listCaptor.allValues.size).isEqualTo(1)
+        assertThat(listCaptor.allValues).hasSize(1)
         assertThat(listCaptor.allValues.first()).containsExactly(*input.toTypedArray())
     }
 
