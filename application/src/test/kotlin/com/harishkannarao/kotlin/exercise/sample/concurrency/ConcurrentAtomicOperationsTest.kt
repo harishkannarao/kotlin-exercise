@@ -1,8 +1,9 @@
-package com.harishkannarao.kotlin.exercise.sample
+package com.harishkannarao.kotlin.exercise.sample.concurrency
 
 import assertk.assertThat
 import assertk.assertions.containsExactlyInAnyOrder
 import assertk.assertions.isEqualTo
+import com.harishkannarao.kotlin.exercise.sample.ConcurrentAtomicOperations
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
