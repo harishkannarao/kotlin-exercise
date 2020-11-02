@@ -5,33 +5,34 @@ import assertk.assertions.isEqualTo
 import kotlinx.coroutines.*
 import org.testng.annotations.Test
 import java.util.concurrent.Executors
-import java.util.concurrent.atomic.AtomicInteger
 import java.util.concurrent.atomic.AtomicLong
+import kotlin.random.Random
 import kotlin.system.measureTimeMillis
 
 class SingleThreadedContextTest {
 
     @Test
     fun `increments long counter using single threaded context`() = runBlocking {
-        val counterContext = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
-        var fromCounter = 100000L
-        var toCounter = 0L
-        val transferQuantity = 1L
+        val singleThreadedContext = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
+        var fromAccount = 100000L
+        var toAccount = 0L
 
         withContext(Dispatchers.Default) {
-            withContext(counterContext) {
-                // confine each massive run to a single-threaded context
+            // confine each massive run to a single-threaded context
+            withContext(singleThreadedContext) {
                 val totalTime = massiveRun(100, 1000) {
-                    fromCounter -= transferQuantity
-                    toCounter += transferQuantity
+                    val transferAmount = Random.nextInt(1, 5)
+                    if (fromAccount >= transferAmount) {
+                        fromAccount -= transferAmount
+                        toAccount += transferAmount
+                    }
                 }
                 println("Total Time = $totalTime ms")
             }
         }
-        println("From Counter = $fromCounter")
-        println("To Counter = $toCounter")
-        assertThat(fromCounter).isEqualTo(0L)
-        assertThat(toCounter).isEqualTo(100000L)
+        println("From Counter = $fromAccount")
+        println("To Counter = $toAccount")
+        assertThat(toAccount + fromAccount).isEqualTo(100000L)
     }
 
     @Test
