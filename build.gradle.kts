@@ -31,6 +31,7 @@ allprojects {
 		implementation("org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion")
 		implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion")
 		implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutinesVersion}")
+		implementation("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:${coroutinesVersion}")
 
 		testImplementation("org.testng:testng:$testNgVersion")
 		testImplementation("com.willowtreeapps.assertk:assertk-jvm:$assertkVersion")
