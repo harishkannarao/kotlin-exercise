@@ -1,8 +1,7 @@
 package com.harishkannarao.kotlin.exercise.sample.concurrency
 
-import assertk.assertThat
-import assertk.assertions.isEqualTo
 import kotlinx.coroutines.*
+import org.amshove.kluent.shouldBeEqualTo
 import org.testng.annotations.Test
 import java.util.concurrent.Executors
 import java.util.concurrent.atomic.AtomicLong
@@ -32,7 +31,7 @@ class SingleThreadedContextTest {
         }
         println("From Counter = $fromAccount")
         println("To Counter = $toAccount")
-        assertThat(toAccount + fromAccount).isEqualTo(100000L)
+        (toAccount + fromAccount).shouldBeEqualTo(100000L)
     }
 
     @Test
@@ -46,7 +45,7 @@ class SingleThreadedContextTest {
             println("Total Time = $totalTime ms")
         }
         println("Counter = $counter")
-        assertThat(counter.get()).isEqualTo(100000L)
+        counter.get().shouldBeEqualTo(100000L)
     }
 
     private suspend fun massiveRun(numberOfCoroutines: Int = 100, repeatTimes: Int = 1000, action: suspend () -> Unit): Long {

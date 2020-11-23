@@ -1,8 +1,7 @@
 package com.harishkannarao.kotlin.exercise.sample.concurrency
 
-import assertk.assertThat
-import assertk.assertions.isEqualTo
 import kotlinx.coroutines.*
+import org.amshove.kluent.shouldBeEqualTo
 import org.testng.annotations.Test
 import java.util.concurrent.Executors
 import kotlin.random.Random
@@ -40,9 +39,9 @@ class MoneyExchangeTest {
         println("Balance Account1 = $account1Balance")
         println("Balance Account2 = $account2Balance")
         println("Total Transaction = $totalTransactions")
-        assertThat(account1Balance + account2Balance).isEqualTo(100000L)
-        assertThat(account1Balance).isEqualTo(0L)
-        assertThat(account2Balance).isEqualTo(100000L)
-        assertThat(totalTransactions).isEqualTo(100000L)
+        account1Balance + account2Balance.shouldBeEqualTo(100000L)
+        account1Balance.shouldBeEqualTo(0L)
+        account2Balance.shouldBeEqualTo(100000L)
+        totalTransactions.shouldBeEqualTo(100000L)
     }
 }

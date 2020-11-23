@@ -1,8 +1,7 @@
 package com.harishkannarao.kotlin.exercise.sample
 
-import assertk.assertThat
-import assertk.assertions.*
-import com.nhaarman.mockitokotlin2.*
+import com.nhaarman.mockitokotlin2.argumentCaptor
+import org.amshove.kluent.*
 import org.testng.annotations.BeforeMethod
 import org.testng.annotations.Test
 
@@ -24,39 +23,38 @@ class SampleServiceTest {
         val id = "test-id"
         val expectedDto = SampleDto(id = id, name = "test-name")
 
-        whenever(mockSampleDao.get(id)).thenReturn(expectedDto)
+        When.calling(mockSampleDao.get(id)).itReturns(expectedDto)
 
         val result: SampleDto = underTest.get(id)
 
-        assertThat(result).isEqualTo(expectedDto)
+        result.shouldBeEqualTo(expectedDto)
     }
 
     @Test
     fun `create saves valid value into data store`() {
         val inputDto = SampleDto("test-id", "name-test")
 
-        whenever(mockSampleDao.save(any(), any())).thenReturn(true)
+        When.calling(mockSampleDao.save(any(), any())).itReturns(true)
 
         underTest.create(inputDto)
 
         val dtoCaptor = argumentCaptor<SampleDto>()
         val booleanCaptor = argumentCaptor<Boolean>()
-        verify(mockSampleDao).save(dtoCaptor.capture(), booleanCaptor.capture())
+        Verify.on(mockSampleDao).save(dtoCaptor.capture(), booleanCaptor.capture())
 
-        assertThat(dtoCaptor.allValues).containsExactly(inputDto)
-        assertThat(booleanCaptor.allValues).containsExactly(true)
+        dtoCaptor.allValues.shouldContainAll(listOf(inputDto))
+        booleanCaptor.allValues.shouldContainAll(listOf(true))
     }
 
     @Test
     fun `create throws error for empty name and doesn't save in data store`() {
         val inputWithEmptyName = SampleDto("test-id", "")
-        assertThat {
+        val result = invoking {
             underTest.create(inputWithEmptyName)
-        }.isFailure().given {
-            assertThat(it.message).isEqualTo("'name' is empty")
-        }
+        }.shouldThrow(IllegalArgumentException::class)
+        result.exception.message.shouldBeEqualTo("'name' is empty")
 
-        verify(mockSampleDao, times(0)).save(any(), any())
+        Verify.times(0).on(mockSampleDao).save(any(), any())
     }
 
     @Test
@@ -68,16 +66,16 @@ class SampleServiceTest {
         underTest.createMany(input)
 
         val listCaptor = argumentCaptor<List<SampleDto>>()
-        verify(mockSampleHttpClient).saveAll(listCaptor.capture())
+        Verify.on(mockSampleHttpClient).saveAll(listCaptor.capture())
 
-        assertThat(listCaptor.allValues).hasSize(1)
-        assertThat(listCaptor.allValues.first().toList()).containsExactly(*input.toTypedArray())
+        listCaptor.allValues.size.shouldBeEqualTo(1)
+        listCaptor.allValues.first().toList().shouldContainSame(input)
     }
 
     @Test
     fun `createMany does not save on empty list`() {
         underTest.createMany(emptyList())
 
-        verify(mockSampleHttpClient, times(0)).saveAll(any())
+        Verify.times(0).on(mockSampleHttpClient).saveAll(any())
     }
 }

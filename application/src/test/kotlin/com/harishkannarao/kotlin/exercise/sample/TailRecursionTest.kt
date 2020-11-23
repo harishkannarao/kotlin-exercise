@@ -1,7 +1,6 @@
 package com.harishkannarao.kotlin.exercise.sample
 
-import assertk.assertThat
-import assertk.assertions.isEqualTo
+import org.amshove.kluent.shouldBeEqualTo
 import org.testng.annotations.Test
 
 class TailRecursionTest {
@@ -12,13 +11,13 @@ class TailRecursionTest {
     fun `calculate returns sum of list items`() {
         val result = underTest.calculateSum(sequenceOf(2, 4, 5))
 
-        assertThat(result).isEqualTo(11)
+        result.shouldBeEqualTo(11)
     }
 
     @Test
     fun `calculate returns 0 for empty list`() {
         val result = underTest.calculateSum(emptySequence())
 
-        assertThat(result).isEqualTo(0)
+        result.shouldBeEqualTo(0)
     }
 }

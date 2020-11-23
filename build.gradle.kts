@@ -11,8 +11,8 @@ val javaVersion: String by project
 val kotlinVersion: String by project
 val coroutinesVersion: String by project
 val testNgVersion: String by project
-val assertkVersion: String by project
 val kotlinMockitoVersion: String by project
+val kluentVersion: String by project
 
 group = "com.harishkannarao.kotlin.exercise"
 version = ""
@@ -25,6 +25,7 @@ allprojects {
 
 	repositories {
 		mavenCentral()
+		jcenter()
 	}
 
 	dependencies {
@@ -34,8 +35,8 @@ allprojects {
 		implementation("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:${coroutinesVersion}")
 
 		testImplementation("org.testng:testng:$testNgVersion")
-		testImplementation("com.willowtreeapps.assertk:assertk-jvm:$assertkVersion")
 		testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:$kotlinMockitoVersion")
+		testImplementation("org.amshove.kluent:kluent:$kluentVersion")
 	}
 
 	tasks.withType<Test> {

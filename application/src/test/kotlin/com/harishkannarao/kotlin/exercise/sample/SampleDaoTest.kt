@@ -1,7 +1,6 @@
 package com.harishkannarao.kotlin.exercise.sample
 
-import assertk.assertThat
-import assertk.assertions.isEqualTo
+import org.amshove.kluent.shouldBeEqualTo
 import org.testng.annotations.Test
 
 class SampleDaoTest {
@@ -13,8 +12,8 @@ class SampleDaoTest {
         val inputId = "test-id"
         val result = underTest.get(inputId)
 
-        assertThat(result.id).isEqualTo(inputId)
-        assertThat(result.name).isEqualTo("name-$inputId")
+        result.id.shouldBeEqualTo(inputId)
+        result.name.shouldBeEqualTo("name-$inputId")
     }
 
     @Test
@@ -25,6 +24,6 @@ class SampleDaoTest {
         )
         val result = underTest.save(inputDto, true)
 
-        assertThat(result).isEqualTo(true)
+        result.shouldBeEqualTo(true)
     }
 }
