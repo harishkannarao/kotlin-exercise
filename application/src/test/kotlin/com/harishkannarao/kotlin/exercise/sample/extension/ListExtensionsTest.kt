@@ -3,7 +3,6 @@ package com.harishkannarao.kotlin.exercise.sample.extension
 import com.harishkannarao.kotlin.exercise.sample.extension.ListExtensions.dropFirst
 import org.amshove.kluent.shouldBeEmpty
 import org.amshove.kluent.shouldBeEqualTo
-import org.amshove.kluent.shouldContainSame
 import org.testng.annotations.Test
 
 class ListExtensionsTest {
@@ -20,7 +19,7 @@ class ListExtensionsTest {
     fun `dropFirst removes first element from a list`() {
         val underTest = listOf("one", "two", "three")
         val result = underTest.dropFirst()
-        result.shouldContainSame(listOf("two", "three"))
+        result.shouldBeEqualTo(listOf("two", "three"))
     }
 
     @Test

@@ -42,8 +42,8 @@ class SampleServiceTest {
         val booleanCaptor = argumentCaptor<Boolean>()
         Verify.on(mockSampleDao).save(dtoCaptor.capture(), booleanCaptor.capture())
 
-        dtoCaptor.allValues.shouldContainAll(listOf(inputDto))
-        booleanCaptor.allValues.shouldContainAll(listOf(true))
+        dtoCaptor.allValues.shouldBeEqualTo(listOf(inputDto))
+        booleanCaptor.allValues.shouldBeEqualTo(listOf(true))
     }
 
     @Test
@@ -69,7 +69,7 @@ class SampleServiceTest {
         Verify.on(mockSampleHttpClient).saveAll(listCaptor.capture())
 
         listCaptor.allValues.size.shouldBeEqualTo(1)
-        listCaptor.allValues.first().toList().shouldContainSame(input)
+        listCaptor.allValues.first().toList().shouldBeEqualTo(input)
     }
 
     @Test

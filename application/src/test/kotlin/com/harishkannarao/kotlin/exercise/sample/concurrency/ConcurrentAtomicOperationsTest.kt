@@ -5,7 +5,6 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 import org.amshove.kluent.shouldBeEqualTo
-import org.amshove.kluent.shouldContainAll
 import org.amshove.kluent.shouldContainSame
 import org.testng.annotations.Test
 import java.math.BigDecimal
@@ -24,7 +23,7 @@ class ConcurrentAtomicOperationsTest {
         }
         runBlocking {
             val result = listOf(result1.await(), result2.await())
-            result.shouldContainAll(listOf(1L, 2L))
+            result.shouldContainSame(listOf(1L, 2L))
         }
     }
 
