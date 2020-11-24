@@ -1,7 +1,9 @@
 package com.harishkannarao.kotlin.exercise.sample
 
-import com.nhaarman.mockitokotlin2.argumentCaptor
-import org.amshove.kluent.*
+import com.nhaarman.mockitokotlin2.*
+import org.amshove.kluent.invoking
+import org.amshove.kluent.shouldBeEqualTo
+import org.amshove.kluent.shouldThrow
 import org.testng.annotations.BeforeMethod
 import org.testng.annotations.Test
 
@@ -23,7 +25,7 @@ class SampleServiceTest {
         val id = "test-id"
         val expectedDto = SampleDto(id = id, name = "test-name")
 
-        When.calling(mockSampleDao.get(id)).itReturns(expectedDto)
+        whenever(mockSampleDao.get(id)).thenReturn(expectedDto)
 
         val result: SampleDto = underTest.get(id)
 
@@ -34,13 +36,13 @@ class SampleServiceTest {
     fun `create saves valid value into data store`() {
         val inputDto = SampleDto("test-id", "name-test")
 
-        When.calling(mockSampleDao.save(any(), any())).itReturns(true)
+        whenever(mockSampleDao.save(any(), any())).thenReturn(true)
 
         underTest.create(inputDto)
 
         val dtoCaptor = argumentCaptor<SampleDto>()
         val booleanCaptor = argumentCaptor<Boolean>()
-        Verify.on(mockSampleDao).save(dtoCaptor.capture(), booleanCaptor.capture())
+        verify(mockSampleDao).save(dtoCaptor.capture(), booleanCaptor.capture())
 
         dtoCaptor.allValues.shouldBeEqualTo(listOf(inputDto))
         booleanCaptor.allValues.shouldBeEqualTo(listOf(true))
@@ -52,9 +54,10 @@ class SampleServiceTest {
         val result = invoking {
             underTest.create(inputWithEmptyName)
         }.shouldThrow(IllegalArgumentException::class)
+
         result.exception.message.shouldBeEqualTo("'name' is empty")
 
-        Verify.times(0).on(mockSampleDao).save(any(), any())
+        verify(mockSampleDao, times(0)).save(any(), any())
     }
 
     @Test
@@ -66,7 +69,7 @@ class SampleServiceTest {
         underTest.createMany(input)
 
         val listCaptor = argumentCaptor<List<SampleDto>>()
-        Verify.on(mockSampleHttpClient).saveAll(listCaptor.capture())
+        verify(mockSampleHttpClient).saveAll(listCaptor.capture())
 
         listCaptor.allValues.size.shouldBeEqualTo(1)
         listCaptor.allValues.first().toList().shouldBeEqualTo(input)
@@ -76,6 +79,6 @@ class SampleServiceTest {
     fun `createMany does not save on empty list`() {
         underTest.createMany(emptyList())
 
-        Verify.times(0).on(mockSampleHttpClient).saveAll(any())
+        verify(mockSampleHttpClient, times(0)).saveAll(any())
     }
 }
