@@ -7,6 +7,7 @@ plugins {
 }
 
 // variables for gradle.properties
+val projectVersion: String by project
 val javaVersion: String by project
 val kotlinVersion: String by project
 val coroutinesVersion: String by project
@@ -43,6 +44,10 @@ allprojects {
 		useTestNG {}
 		val properties = System.getProperties().entries.map { it.key.toString() to it.value }.toMap()
 		systemProperties(properties)
+	}
+
+	tasks.withType<Jar> {
+		archiveVersion.set(projectVersion)
 	}
 
 	tasks.withType<KotlinCompile> {

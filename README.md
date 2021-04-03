@@ -23,3 +23,8 @@
 #### Java
 
     java -jar application/build/libs/application-exec.jar
+
+### Change project version
+
+    ./gradlew clean build -PprojectVersion=1.0.0
+ 
