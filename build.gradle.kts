@@ -2,7 +2,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
 	id("java")
-	kotlin("jvm").apply(false)
+	id("org.jetbrains.kotlin.jvm").apply(false)
 
 }
 
