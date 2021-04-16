@@ -28,11 +28,11 @@ Assemble the Jar file:
 
 Simpler Way:
 
-    java -jar application/build/libs/application-exec.jar
+    java -jar application/build/libs/application-all.jar
 
 Verbose Way with explicit class name to execute:
 
-    java -cp application/build/libs/application-exec.jar com.harishkannarao.kotlin.exercise.DemoApplication
+    java -cp application/build/libs/application-all.jar com.harishkannarao.kotlin.exercise.DemoApplication
 
 ### Change project version
 
