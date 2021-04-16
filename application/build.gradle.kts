@@ -1,11 +1,13 @@
 plugins {
-    application
+    id("application")
     id("com.github.johnrengelman.shadow")
 }
 
 application {
-    mainClassName = "com.harishkannarao.kotlin.exercise.DemoApplication"
+    mainClass.set("com.harishkannarao.kotlin.exercise.DemoApplication")
 }
+
+project.setProperty("mainClassName", application.mainClass.get())
 
 tasks {
     named<JavaExec>("run") {
