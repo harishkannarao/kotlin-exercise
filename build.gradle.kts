@@ -26,7 +26,6 @@ allprojects {
 
 	repositories {
 		mavenCentral()
-		jcenter()
 	}
 
 	dependencies {
