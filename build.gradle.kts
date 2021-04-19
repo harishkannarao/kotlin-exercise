@@ -12,8 +12,8 @@ val javaVersion: String by project
 val kotlinVersion: String by project
 val coroutinesVersion: String by project
 val testNgVersion: String by project
-val kotlinMockitoVersion: String by project
 val kluentVersion: String by project
+val mockkVersion: String by project
 
 group = "com.harishkannarao.kotlin.exercise"
 version = ""
@@ -35,7 +35,7 @@ allprojects {
 		implementation("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:${coroutinesVersion}")
 
 		testImplementation("org.testng:testng:$testNgVersion")
-		testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:$kotlinMockitoVersion")
+		testImplementation("io.mockk:mockk:$mockkVersion")
 		testImplementation("org.amshove.kluent:kluent:$kluentVersion")
 	}
 

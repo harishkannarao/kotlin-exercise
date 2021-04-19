@@ -1,6 +1,6 @@
 package com.harishkannarao.kotlin.exercise.sample
 
-import com.nhaarman.mockitokotlin2.*
+import io.mockk.*
 import org.amshove.kluent.invoking
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldThrow
@@ -15,8 +15,8 @@ class SampleServiceTest {
 
     @BeforeMethod(alwaysRun = true)
     fun setUp() {
-        mockSampleDao = mock()
-        mockSampleHttpClient = mock()
+        mockSampleDao = mockk()
+        mockSampleHttpClient = mockk()
         underTest = SampleService(mockSampleDao, mockSampleHttpClient)
     }
 
@@ -25,7 +25,7 @@ class SampleServiceTest {
         val id = "test-id"
         val expectedDto = SampleDto(id = id, name = "test-name")
 
-        whenever(mockSampleDao.get(id)).thenReturn(expectedDto)
+        every { mockSampleDao.get(id) } returns expectedDto
 
         val result: SampleDto = underTest.get(id)
 
@@ -35,17 +35,17 @@ class SampleServiceTest {
     @Test
     fun `create saves valid value into data store`() {
         val inputDto = SampleDto("test-id", "name-test")
+        val dtoCaptor = mutableListOf<SampleDto>()
+        val booleanCaptor = mutableListOf<Boolean>()
 
-        whenever(mockSampleDao.save(any(), any())).thenReturn(true)
+        every { mockSampleDao.hint(Boolean::class).save(capture(dtoCaptor), capture(booleanCaptor)) } returns true
 
         underTest.create(inputDto)
 
-        val dtoCaptor = argumentCaptor<SampleDto>()
-        val booleanCaptor = argumentCaptor<Boolean>()
-        verify(mockSampleDao).save(dtoCaptor.capture(), booleanCaptor.capture())
+        verify { mockSampleDao.save(any(), any()) }
 
-        dtoCaptor.allValues.shouldBeEqualTo(listOf(inputDto))
-        booleanCaptor.allValues.shouldBeEqualTo(listOf(true))
+        dtoCaptor.toList().shouldBeEqualTo(listOf(inputDto))
+        booleanCaptor.toList().shouldBeEqualTo(listOf(true))
     }
 
     @Test
@@ -57,7 +57,7 @@ class SampleServiceTest {
 
         result.exception.message.shouldBeEqualTo("'name' is empty")
 
-        verify(mockSampleDao, times(0)).save(any(), any())
+        verify(exactly = 0) { mockSampleDao.save(any(), any()) }
     }
 
     @Test
@@ -65,20 +65,22 @@ class SampleServiceTest {
         val dto1 = SampleDto("id1", "name1")
         val dto2 = SampleDto("id2", "name2")
         val input = listOf(dto1, dto2)
+        val listCaptor = mutableListOf<List<SampleDto>>()
+
+        every { mockSampleHttpClient.saveAll(capture(listCaptor)) } just Runs
 
         underTest.createMany(input)
 
-        val listCaptor = argumentCaptor<List<SampleDto>>()
-        verify(mockSampleHttpClient).saveAll(listCaptor.capture())
+        verify { mockSampleHttpClient.saveAll(any()) }
 
-        listCaptor.allValues.size.shouldBeEqualTo(1)
-        listCaptor.allValues.first().toList().shouldBeEqualTo(input)
+        listCaptor.toList().size.shouldBeEqualTo(1)
+        listCaptor.toList().first().toList().shouldBeEqualTo(input)
     }
 
     @Test
     fun `createMany does not save on empty list`() {
         underTest.createMany(emptyList())
 
-        verify(mockSampleHttpClient, times(0)).saveAll(any())
+        verify(exactly = 0) { mockSampleHttpClient.saveAll(any()) }
     }
 }
